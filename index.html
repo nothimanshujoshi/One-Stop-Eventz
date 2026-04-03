@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Stop Eventz | Event Planners & Decor Curators</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================
+           ROYAL & AIRY THEME VARIABLES
+           ========================================== */
+        :root {
+            --color-wine: #542333;       /* Deep Royal Maroon */
+            --color-gold: #C6A27A;       /* Champagne Gold */
+            --color-bg-light: #FDFBF9;   /* Pearl Blush White */
+            --color-bg-white: #FFFFFF;
+            --color-text-main: #333333;
+            --color-text-muted: #666666;
+            
+            --font-head: 'Cormorant Garamond', serif;
+            --font-body: 'Montserrat', sans-serif;
+            
+            --shadow-soft: 0 20px 40px rgba(84, 35, 51, 0.08);
+            --transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-bg-light);
+            color: var(--color-text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-head);
+            color: var(--color-wine);
+            font-weight: 600;
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        .section-padding { padding: 8rem 0; }
+        .text-center { text-align: center; }
+        .bg-white { background-color: var(--color-bg-white); }
+        .mt-2 { margin-top: 2rem; }
+
+        /* Typography */
+        .title-elegant {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        .title-elegant i { font-style: italic; color: var(--color-gold); font-weight: 400; }
+
+        .subtitle {
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.85rem;
+            color: var(--color-gold);
+            font-weight: 500;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            display: inline-block;
+            background: var(--color-wine);
+            color: #fff;
+            padding: 15px 35px;
+            font-family: var(--font-body);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            border: 1px solid var(--color-wine);
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(84, 35, 51, 0.2);
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--color-wine);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(84, 35, 51, 0.1);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--color-wine);
+            border: 1px solid var(--color-wine);
+        }
+        .btn-outline:hover { background: var(--color-wine); color: #fff; }
+
+        /* ==========================================
+           1. Glassmorphism Navbar
+           ========================================== */
+        nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            background: rgba(253, 251, 249, 0.85);
+            backdrop-filter: blur(15px);
+            padding: 1rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-radius: 50px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+
+        .logo { font-family: var(--font-head); font-size: 1.8rem; font-weight: 700; color: var(--color-wine); letter-spacing: 1px; }
+        .logo span { color: var(--color-gold); font-style: italic; font-weight: 400; }
+
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links li a { font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; color: var(--color-text-main); }
+        .nav-links li a:hover { color: var(--color-gold); }
+
+        .menu-toggle { display: none; font-size: 1.5rem; color: var(--color-wine); cursor: pointer; }
+
+        /* ==========================================
+           2. Hero Section
+           ========================================== */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center;
+            padding-top: 100px; position: relative; overflow: hidden;
+        }
+
+        .hero::before {
+            content: ''; position: absolute; top: -10%; left: -5%;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(198,162,122,0.15) 0%, rgba(253,251,249,0) 70%);
+            border-radius: 50%; z-index: -1;
+        }
+
+        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+
+        .hero-text h1 { font-size: 4.5rem; line-height: 1.1; margin-bottom: 1.5rem; }
+        .hero-text p { font-size: 1.1rem; color: var(--color-text-muted); margin-bottom: 2.5rem; max-width: 450px; }
+        
+        .hero-buttons { display: flex; gap: 1rem; }
+
+        .hero-image-wrapper { position: relative; height: 650px; display: flex; justify-content: center; }
+        .hero-img-main {
+            width: 85%; height: 100%; object-fit: cover;
+            border-radius: 200px 200px 0 0;
+            box-shadow: var(--shadow-soft); border: 8px solid #fff;
+        }
+
+        .hero-badge {
+            position: absolute; bottom: 40px; left: -20px;
+            background: #fff; padding: 20px 30px; border-radius: 20px;
+            box-shadow: var(--shadow-soft); text-align: center;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .hero-badge h3 { color: var(--color-gold); font-size: 2rem; margin: 0; line-height: 1;}
+        .hero-badge p { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin: 0;}
+
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); } }
+
+        /* ==========================================
+           3. About Section
+           ========================================== */
+        .about-section { border-top: 1px solid rgba(198,162,122,0.2); border-bottom: 1px solid rgba(198,162,122,0.2); }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+
+        .about-images { position: relative; }
+        .img-back { width: 80%; border-radius: 20px; box-shadow: var(--shadow-soft); }
+        .img-front {
+            position: absolute; bottom: -30px; right: 0; width: 50%;
+            border: 10px solid #fff; border-radius: 200px 200px 0 0; box-shadow: var(--shadow-soft);
+        }
+
+        .about-stats { display: flex; gap: 2rem; margin-top: 2rem; }
+        .stat-box h4 { font-size: 2rem; color: var(--color-gold); line-height: 1; margin-bottom: 5px;}
+        .stat-box p { font-size: 0.8rem; text-transform: uppercase; font-weight: 500; color: var(--color-text-main); }
+
+        /* ==========================================
+           4. Services Cards
+           ========================================== */
+        .services-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 4rem; }
+
+        .service-card {
+            background: #fff; padding: 3rem 1.5rem;
+            border-radius: 150px 150px 10px 10px;
+            text-align: center; box-shadow: var(--shadow-soft);
+            transition: var(--transition); border-bottom: 3px solid transparent;
+        }
+
+        .service-card:hover { transform: translateY(-15px); border-bottom: 3px solid var(--color-gold); }
+
+        .service-icon {
+            width: 70px; height: 70px; background: var(--color-bg-light); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1.5rem auto; font-size: 1.8rem; color: var(--color-wine); border: 1px dashed var(--color-gold);
+        }
+
+        /* ==========================================
+           5. Destination / Venues
+           ========================================== */
+        .dest-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .dest-img-wrap { position: relative; }
+        .dest-img { width: 100%; height: 500px; object-fit: cover; border-radius: 0 200px 200px 0; box-shadow: var(--shadow-soft); }
+        
+        .luxury-list { margin: 2rem 0; }
+        .luxury-list li { font-family: var(--font-head); font-size: 1.3rem; margin-bottom: 1rem; color: var(--color-wine); }
+        .luxury-list li::before { content: '✦'; color: var(--color-gold); margin-right: 10px; }
+
+        /* ==========================================
+           6. Events Gallery Grid
+           ========================================== */
+        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; align-items: center; margin-top: 4rem;}
+        .gallery-col { display: flex; flex-direction: column; gap: 2rem; }
+        .gallery-col.middle { transform: translateY(40px); }
+
+        .gal-item { position: relative; overflow: hidden; cursor: pointer; border-radius: 15px; }
+        .gal-item.arch { border-radius: 150px 150px 0 0; }
+        
+        .gal-img { width: 100%; height: 350px; object-fit: cover; box-shadow: var(--shadow-soft); transition: var(--transition); display: block; }
+        .gal-item:hover .gal-img { transform: scale(1.05); }
+
+        .gal-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(84, 35, 51, 0.6); display: flex; align-items: center; justify-content: center;
+            opacity: 0; transition: var(--transition);
+        }
+        .gal-item:hover .gal-overlay { opacity: 1; }
+        .gal-overlay span { color: var(--color-gold); font-family: var(--font-head); font-size: 1.5rem; font-style: italic; transform: translateY(20px); transition: var(--transition); }
+        .gal-item:hover .gal-overlay span { transform: translateY(0); }
+
+        /* ==========================================
+           7. Why Choose Us
+           ========================================== */
+        .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; text-align: center; margin-top: 4rem; }
+        .feature-block .check {
+            display: inline-block; width: 60px; height: 60px; line-height: 60px;
+            background: rgba(198, 162, 122, 0.1); color: var(--color-gold);
+            border-radius: 50%; font-size: 1.5rem; margin-bottom: 1rem; border: 1px dashed var(--color-gold);
+        }
+        .feature-block h4 { font-family: var(--font-body); font-size: 1rem; font-weight: 600; }
+
+        /* ==========================================
+           8. Process Timeline
+           ========================================== */
+        .timeline { display: flex; justify-content: space-between; position: relative; max-width: 1000px; margin: 4rem auto 0 auto; }
+        .timeline::before { content: ''; position: absolute; top: 20px; left: 0; width: 100%; height: 1px; background: rgba(198,162,122,0.4); z-index: 1; }
+        
+        .time-step { position: relative; z-index: 2; text-align: center; width: 220px; background: var(--color-bg-light); }
+        .time-step .dot {
+            width: 40px; height: 40px; background: var(--color-bg-white); border: 2px solid var(--color-gold);
+            border-radius: 50%; margin: 0 auto 1.5rem auto; display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-head); font-weight: bold; color: var(--color-wine); font-size: 1.2rem; transition: var(--transition);
+        }
+        .time-step:hover .dot { background: var(--color-gold); color: #fff; box-shadow: 0 0 15px rgba(198,162,122,0.3); }
+        .time-step p { font-size: 0.85rem; color: #666; }
+
+        /* ==========================================
+           9. Testimonials
+           ========================================== */
+        .test-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; margin-top: 4rem;}
+        .test-card {
+            background: #fff; padding: 3rem; text-align: center;
+            border-radius: 20px; box-shadow: var(--shadow-soft); position: relative;
+        }
+        .test-card::before { content: '“'; position: absolute; top: 10px; left: 20px; font-family: var(--font-head); font-size: 4rem; color: rgba(198,162,122,0.2); line-height: 1; }
+        .test-card .quote { font-family: var(--font-head); font-size: 1.2rem; font-style: italic; color: var(--color-text-main); margin-bottom: 1.5rem; position: relative; z-index: 2;}
+        .test-card .author { color: var(--color-gold); text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; font-family: var(--font-body);}
+
+        /* ==========================================
+           10. Instagram Feed
+           ========================================== */
+        .insta-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 3rem 0; }
+        .insta-grid img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 10px; filter: grayscale(20%); transition: var(--transition); }
+        .insta-grid img:hover { filter: grayscale(0); transform: scale(1.03); }
+
+        /* ==========================================
+           11. Contact Section & Form
+           ========================================== */
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+        
+        .contact-info-box {
+            background: #fff; padding: 3rem; border-radius: 20px; box-shadow: var(--shadow-soft);
+        }
+
+        /* Form Styles */
+        .form-group { margin-bottom: 1.5rem; }
+        .form-control {
+            width: 100%; padding: 15px 20px;
+            border: 1px solid rgba(84, 35, 51, 0.2); border-radius: 10px;
+            font-family: var(--font-body); font-size: 0.9rem;
+            background: var(--color-bg-light); color: var(--color-text-main);
+            transition: var(--transition);
+        }
+        .form-control:focus {
+            outline: none; border-color: var(--color-gold);
+            box-shadow: 0 0 15px rgba(198,162,122,0.2);
+        }
+        textarea.form-control { height: 150px; resize: none; }
+        select.form-control { cursor: pointer; appearance: none; }
+
+        /* ==========================================
+           12. Footer
+           ========================================== */
+        footer { padding: 5rem 2rem 2rem 2rem; background: #fff; border-top: 1px solid rgba(198,162,122,0.2); }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; text-align: left; }
+        .footer-logo { font-size: 2.2rem; margin-bottom: 1rem; }
+        .footer-grid h4 { color: var(--color-gold); font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem; font-family: var(--font-body); }
+        .footer-grid p, .footer-grid a { color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 0.8rem; display: block;}
+        .footer-grid a:hover { color: var(--color-wine); padding-left: 5px; }
+        
+        .socials { display: flex; gap: 1rem; }
+        .socials a {
+            width: 40px; height: 40px; border: 1px solid rgba(198,162,122,0.3); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: var(--color-wine);
+        }
+        .socials a:hover { background: var(--color-gold); color: #fff; padding-left: 0; border-color: var(--color-gold); }
+        
+        .copyright { text-align: center; padding-top: 2rem; margin-top: 3rem; border-top: 1px solid rgba(198,162,122,0.2); color: #999; font-size: 0.85rem; }
+
+        /* ==========================================
+           Animations & Media Queries
+           ========================================== */
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 1s cubic-bezier(0.25, 1, 0.5, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 992px) {
+            .hero-grid, .about-grid, .dest-grid, .contact-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero { padding-top: 150px; }
+            .hero-text h1 { font-size: 3.5rem; }
+            .hero-text p { margin: 0 auto 2.5rem auto; }
+            .hero-buttons { justify-content: center; }
+            .img-front { position: relative; bottom: 0; width: 80%; margin-top: -50px; }
+            .dest-img { border-radius: 20px; }
+            .gallery-grid { grid-template-columns: 1fr; }
+            .gallery-col.middle { transform: translateY(0); }
+            .timeline { flex-direction: column; align-items: center; gap: 2rem; }
+            .timeline::before { display: none; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+            .contact-info-box { text-align: center; }
+            .contact-info-box div { justify-content: center; }
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 1rem 1.5rem; width: 95%; border-radius: 20px; }
+            .nav-links, .nav-btn { display: none; }
+            .menu-toggle { display: block; }
+            .hero-text h1 { font-size: 2.8rem; }
+            .features-grid, .test-grid, .insta-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            .socials { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">One Stop <span>Eventz</span></div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <a href="tel:+917068382666" class="btn-primary btn-outline nav-btn">📞 Call Now</a>
+        <div class="menu-toggle">☰</div>
+    </nav>
+
+    <section id="home" class="hero container">
+        <div class="hero-grid">
+            <div class="hero-text reveal">
+                <span class="subtitle">Event Planners & Decor Curators</span>
+                <h1>Crafting Your <i>Perfect</i> Event</h1>
+                <p>Specializing in Weddings, Birthdays, Anniversaries, and Etc. Let us curate your next big moment.</p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn-primary">Book Your Event</a>
+                    <a href="#services" class="btn-primary btn-outline">Explore Services</a>
+                </div>
+            </div>
+            <div class="hero-image-wrapper reveal">
+                <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&q=80" alt="Beautiful Event Decor" class="hero-img-main">
+                <div class="hero-badge">
+                    <h3>350+</h3>
+                    <p>Instagram Followers</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about-section bg-white section-padding">
+        <div class="container about-grid">
+            <div class="about-images reveal">
+                <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80" alt="Wedding Decor" class="img-back">
+                <img src="https://images.pexels.com/photos/36248921/pexels-photo-36248921.jpeg?auto=format&fit=crop&q=80" alt="Couple Celebration" class="img-front">
+            </div>
+            <div class="about-text reveal">
+                <span class="subtitle">About Us</span>
+                <h2 class="title-elegant">Curating <i>Memories</i></h2>
+                <p style="color: var(--color-text-muted); margin-bottom: 1.5rem;">One Stop Eventz is your ultimate partner for event planning and bespoke decor curation. Whether it's a grand wedding or an intimate birthday bash, we bring creativity, passion, and flawless execution to the table.</p>
+                
+                <div class="about-stats">
+                    <div class="stat-box">
+                        <h4>48+</h4>
+                        <p>Events Curated</p>
+                    </div>
+                    <div class="stat-box">
+                        <h4>100%</h4>
+                        <p>Client Satisfaction</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="section-padding container">
+        <div class="text-center reveal">
+            <span class="subtitle">Our Expertise</span>
+            <h2 class="title-elegant">Event <i>Services</i></h2>
+        </div>
+        
+        <div class="services-wrapper">
+            <div class="service-card reveal">
+                <div class="service-icon">💍</div>
+                <h4>Weddings</h4>
+                <p style="font-size: 0.85rem; color: #666; margin-top: 1rem;">Complete planning and luxury decor for your big day.</p>
+            </div>
+            <div class="service-card reveal" style="transition-delay: 0.1s;">
+                <div class="service-icon">🎂</div>
+                <h4>Birthdays</h4>
+                <p style="font-size: 0.85rem; color: #666; margin-top: 1rem;">Themed setups and joyful curation for all ages.</p>
+            </div>
+            <div class="service-card reveal" style="transition-delay: 0.2s;">
+                <div class="service-icon">🥂</div>
+                <h4>Anniversaries</h4>
+                <p style="font-size: 0.85rem; color: #666; margin-top: 1rem;">Romantic designs to celebrate your milestones.</p>
+            </div>
+            <div class="service-card reveal" style="transition-delay: 0.3s;">
+                <div class="service-icon">✨</div>
+                <h4>Etc. Events</h4>
+                <p style="font-size: 0.85rem; color: #666; margin-top: 1rem;">Custom decor and planning for baby showers, corporate, and more.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="destinations" class="bg-white section-padding">
+        <div class="container dest-grid">
+            <div class="about-text reveal">
+                <span class="subtitle">Venues & Vibes</span>
+                <h2 class="title-elegant">Anywhere You <i>Celebrate</i></h2>
+                <p>We design breathtaking setups in banquets, lawns, luxury resorts, or even your own backyard. Wherever your vision takes you, we bring the aesthetics.</p>
+                <ul class="luxury-list">
+                    <li>Grand Banquet Halls</li>
+                    <li>Outdoor Lawn Events</li>
+                    <li>Intimate Home Setups</li>
+                    <li>Luxury Resort Retreats</li>
+                </ul>
+                <a href="#contact" class="btn-primary mt-2">Discuss Your Venue</a>
+            </div>
+            <div class="dest-img-wrap reveal">
+                <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80" alt="Palace Wedding" class="dest-img">
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="section-padding container">
+        <div class="text-center reveal" style="margin-bottom: 2rem;">
+            <span class="subtitle">Portfolio</span>
+            <h2 class="title-elegant">Decor <i>Inspiration</i></h2>
+        </div>
+        
+        <div class="gallery-grid">
+            <div class="gallery-col reveal">
+                <div class="gal-item arch"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80" alt="Gallery" class="gal-img" style="height: 450px;"><div class="gal-overlay"><span>View Decor</span></div></div>
+                <div class="gal-item"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80" alt="Gallery" class="gal-img"><div class="gal-overlay"><span>View Decor</span></div></div>
+            </div>
+            <div class="gallery-col middle reveal" style="transition-delay: 0.2s;">
+                <div class="gal-item"><img src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&q=80" alt="Gallery" class="gal-img"><div class="gal-overlay"><span>View Decor</span></div></div>
+                <div class="gal-item arch"><img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&q=80" alt="Gallery" class="gal-img" style="height: 450px;"><div class="gal-overlay"><span>View Decor</span></div></div>
+            </div>
+            <div class="gallery-col reveal" style="transition-delay: 0.4s;">
+                <div class="gal-item arch"><img src="https://images.unsplash.com/photo-1505932794465-147d1f1b2c97?auto=format&fit=crop&q=80" alt="Gallery" class="gal-img" style="height: 450px;"><div class="gal-overlay"><span>View Decor</span></div></div>
+                <div class="gal-item"><img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80" alt="Gallery" class="gal-img"><div class="gal-overlay"><span>View Decor</span></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-white section-padding">
+        <div class="container">
+            <div class="text-center reveal">
+                <h2 class="title-elegant">The One Stop <i>Advantage</i></h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-block reveal">
+                    <span class="check">✔</span>
+                    <h4>One Stop Solution</h4>
+                </div>
+                <div class="feature-block reveal" style="transition-delay: 0.1s;">
+                    <span class="check">✔</span>
+                    <h4>Creative Decor Curators</h4>
+                </div>
+                <div class="feature-block reveal" style="transition-delay: 0.2s;">
+                    <span class="check">✔</span>
+                    <h4>Flawless Execution</h4>
+                </div>
+                <div class="feature-block reveal" style="transition-delay: 0.3s;">
+                    <span class="check">✔</span>
+                    <h4>Stress Free Planning</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding container">
+        <div class="text-center reveal">
+            <span class="subtitle">How It Works</span>
+            <h2 class="title-elegant">Our Journey <i>Together</i></h2>
+        </div>
+        <div class="timeline reveal">
+            <div class="time-step">
+                <div class="dot">1</div>
+                <h4 style="color: var(--color-wine); margin-bottom: 5px;">Reach Out</h4>
+                <p>DM or Call us to discuss your vision.</p>
+            </div>
+            <div class="time-step">
+                <div class="dot">2</div>
+                <h4 style="color: var(--color-wine); margin-bottom: 5px;">Secure Booking</h4>
+                <p>📋 Deposit confirms & secures your date.</p>
+            </div>
+            <div class="time-step">
+                <div class="dot">3</div>
+                <h4 style="color: var(--color-wine); margin-bottom: 5px;">Design & Curation</h4>
+                <p>We map out the decor and details.</p>
+            </div>
+            <div class="time-step">
+                <div class="dot">4</div>
+                <h4 style="color: var(--color-wine); margin-bottom: 5px;">Execution</h4>
+                <p>You celebrate, we handle the rest.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-white section-padding">
+        <div class="container">
+            <div class="text-center reveal">
+                <span class="subtitle">Client Love</span>
+                <h2 class="title-elegant">Words of <i>Love</i></h2>
+            </div>
+            <div class="test-grid">
+                <div class="test-card reveal">
+                    <p class="quote">“Our anniversary setup was like a dream. Every detail was perfect and completely stress-free.”</p>
+                    <h5 class="author">- Happy Client</h5>
+                </div>
+                <div class="test-card reveal" style="transition-delay: 0.1s;">
+                    <p class="quote">“The decor was beyond our wildest expectations. One Stop Eventz truly delivered magic for my birthday.”</p>
+                    <h5 class="author">- Birthday Girl</h5>
+                </div>
+                <div class="test-card reveal" style="transition-delay: 0.2s;">
+                    <p class="quote">“From the entrance to the stage, they handled our entire wedding decor flawlessly.”</p>
+                    <h5 class="author">- The Newlyweds</h5>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding container text-center">
+        <div class="reveal">
+            <h2 class="title-elegant">Follow Our <i>Stories</i></h2>
+            <p style="margin-bottom: 2rem; color: var(--color-text-muted);">Join our <b>357+ followers</b> and see our latest <b>48+ posts</b> of event magic.</p>
+            <div class="insta-grid">
+                <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&q=80" alt="Insta 1">
+                <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&q=80" alt="Insta 2">
+                <img src="https://images.unsplash.com/photo-1505932794465-147d1f1b2c97?auto=format&fit=crop&q=80" alt="Insta 3">
+                <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80" alt="Insta 4">
+            </div>
+            <a href="#" class="btn-primary btn-outline" style="margin-top: 1rem;">Follow on Instagram</a>
+        </div>
+    </section>
+
+    <section id="contact" class="bg-white section-padding">
+        <div class="container">
+            <div class="text-center reveal" style="margin-bottom: 4rem;">
+                <span class="subtitle">Queries / DM / Call</span>
+                <h2 class="title-elegant">Let's Talk <i>Events</i></h2>
+                <p style="font-weight: 500; color: var(--color-wine);">📋 Deposit Confirms & Secures booking</p>
+            </div>
+
+            <div class="contact-grid reveal">
+                <div class="contact-info-box">
+                    <h3 style="margin-bottom: 1rem; font-size: 2rem;">Reach Out</h3>
+                    <p style="color: var(--color-text-muted); margin-bottom: 2rem;">Ready to start planning? Drop us a DM, give us a call, or fill out the form. Let's make it happen!</p>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <span class="subtitle" style="margin-bottom: 0.5rem; color: var(--color-text-muted);">Phone Numbers</span>
+                        <a href="tel:+917068382666" style="font-size: 1.8rem; font-family: var(--font-head); color: var(--color-wine); display: block; font-weight: 700;">7068382666</a>
+                        <a href="tel:+917068402777" style="font-size: 1.8rem; font-family: var(--font-head); color: var(--color-wine); display: block; font-weight: 700;">7068402777</a>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem;">
+                        <a href="tel:+917068382666" class="btn-primary">Call Us</a>
+                        <a href="https://wa.me/917068382666" class="btn-primary btn-outline">WhatsApp</a>
+                    </div>
+                </div>
+
+                <div class="contact-form-wrapper">
+                    <form action="#" method="POST">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Full Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" class="form-control" placeholder="Phone Number" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <select class="form-control" required>
+                                <option value="" disabled selected>Select Event Type</option>
+                                <option value="Wedding">Wedding</option>
+                                <option value="Birthday">Birthday</option>
+                                <option value="Anniversary">Anniversary</option>
+                                <option value="Other">Etc. (Other)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="date" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <textarea class="form-control" placeholder="Tell us more about your event requirements..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-primary" style="width: 100%; border-radius: 10px;">Submit Query</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-grid">
+            <div>
+                <h2 class="logo footer-logo">One Stop <span>Eventz</span></h2>
+                <p>Event Planners & Decor Curators dedicated to transforming your special moments into unforgettable experiences.</p>
+            </div>
+            <div>
+                <h4>Our Services</h4>
+                <a href="#services">Weddings</a>
+                <a href="#services">Birthdays</a>
+                <a href="#services">Anniversaries</a>
+                <a href="#services">Decor Curation</a>
+            </div>
+            <div>
+                <h4>Contact Info</h4>
+                <p>Queries: DM / Call</p>
+                <p>+91 7068382666</p>
+                <p>+91 7068402777</p>
+                <p style="margin-top: 10px; font-weight: bold;">📋 Deposit Confirms Booking</p>
+            </div>
+            <div>
+                <h4>Follow Us</h4>
+                <p style="margin-bottom: 1rem; color: var(--color-gold);">Join our Instagram Community</p>
+                <div class="socials">
+                    <a href="#">IG</a>
+                    <a href="#">FB</a>
+                </div>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2026 One Stop Eventz. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal();
+    </script>
+</body>
+</html>
